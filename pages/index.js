@@ -31,7 +31,7 @@ export default function Home() {
           alt='main-photo'
           style={{ marginBottom: "2rem" }}
         />
-        <h5>About "The Met"</h5>
+        <h5>About &quot;The Met&quot;</h5>
         <Row>
           <Col md={6}>
             <p className={styles.text}>The Metropolitan Museum of Art of New York City, colloquially &quot;the Met&quot;, is the largest art museum in the Americas. Its permanent collection contains over two million works, divided among 17 curatorial departments. The main building at 1000 Fifth Avenue, along the Museum Mile on the eastern edge of Central Park on Manhattan&apos;s Upper East Side, is by area one of the world&apos;s largest art museums. A much smaller second location, The Cloisters at Fort Tryon Park in Upper Manhattan, contains an extensive collection of art, architecture, and artifacts from medieval Europe.</p>

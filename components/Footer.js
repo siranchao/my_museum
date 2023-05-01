@@ -14,7 +14,7 @@ function Footer() {
                     <Link href="/search" passHref legacyBehavior>
                         <Nav.Link>Search</Nav.Link>
                     </Link>
-                    <Nav.Link href='https://www.metmuseum.org/' target='_blank'>Visit "The Met"</Nav.Link>
+                    <Nav.Link href='https://www.metmuseum.org/' target='_blank'>Visit &quot;The Met&quot;</Nav.Link>
                 </Nav>
                 <p style={{ fontSize: "0.8rem", textAlign: "center", color: "#fff", margin: "0", padding: "10px" }}>Copyright &copy; 2023 Siran Cao. This website is for study purpose only</p>
             </Navbar>
