@@ -49,7 +49,7 @@ export default function MainNav() {
         <>
             <Navbar variant="dark" expand="lg" fixed="top" bg="primary" expanded={isExpanded}>
                 <Container>
-                    <Navbar.Brand><Link href="/" passHref legacyBehavior><Nav.Link onClick={collapseNav}>Siran Cao</Nav.Link></Link></Navbar.Brand>
+                    <Navbar.Brand><Link href="/" passHref legacyBehavior><Nav.Link onClick={collapseNav} id='logo'>Portable Museum</Nav.Link></Link></Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={() => setIsExpanded(!isExpanded)} />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         &nbsp;
