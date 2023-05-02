@@ -26,7 +26,7 @@ export default function ArtworkCardDetail({ objectID }) {
 
     useEffect(() => {
         setAdded(favorites?.includes(objectID))
-    }, [favorites])
+    }, [favorites, objectID])
 
 
 

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { isAuthenticated } from "@/lib/auth";
 import { favoritesAtom, searchHistoryAtom } from "@/store";
 import { useAtom } from 'jotai'
@@ -16,6 +16,23 @@ export default function RouteGuard(props) {
     const [favorites, setFavorites] = useAtom(favoritesAtom);
     const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom);
 
+    const authCheck = useCallback((url) => {
+        const path = url.split('?')[0];
+        if (!isAuthenticated() && !PUBLIC_PATHS.includes(path)) {
+            setAuthorized(false);
+            router.push('/login');
+        }
+        else {
+            setAuthorized(true);
+        }
+    }, [router]);
+
+    const updateAtoms = useCallback(async () => {
+        setFavorites(await getFavorites());
+        setSearchHistory(await getHistory());
+    }, [setFavorites, setSearchHistory]);
+
+
     useEffect(() => {
         updateAtoms();
         authCheck(router.pathname);
@@ -26,23 +43,8 @@ export default function RouteGuard(props) {
         return () => {
             router.events.off('routeChangeComplete', authCheck);
         }
-    }, []);
+    }, [authCheck, updateAtoms, router.events, router.pathname]);
 
-    function authCheck(url) {
-        const path = url.split('?')[0];
-        if (!isAuthenticated() && !PUBLIC_PATHS.includes(path)) {
-            setAuthorized(false);
-            router.push('/login');
-        }
-        else {
-            setAuthorized(true);
-        }
-    }
-
-    async function updateAtoms() {
-        setFavorites(await getFavorites());
-        setSearchHistory(await getHistory());
-    }
 
     return (
         <>
