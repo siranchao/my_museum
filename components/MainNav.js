@@ -55,6 +55,7 @@ export default function MainNav() {
                         &nbsp;
                         <Nav className="me-auto">
                             <Link href="/" passHref legacyBehavior><Nav.Link onClick={collapseNav} active={router.pathname === "/"}>Home</Nav.Link></Link>
+                            <Link href="/departments" passHref legacyBehavior><Nav.Link onClick={collapseNav} active={router.pathname === "/departments"}>Departments</Nav.Link></Link>
                             {token && <Link href="/search" passHref legacyBehavior><Nav.Link onClick={collapseNav} active={router.pathname === "/search"} >Advanced Search</Nav.Link></Link>}
                         </Nav>
                         &nbsp;
