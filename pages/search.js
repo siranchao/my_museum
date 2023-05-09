@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import useSWR from 'swr'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/router'
@@ -13,14 +14,18 @@ export default function AdvancedSearch() {
 
     const router = useRouter()
 
+    const { data, error } = useSWR(`https://collectionapi.metmuseum.org/public/collection/v1/departments`)
+
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             query: "",
             searchBy: "title",
             geoLocation: "",
             medium: "",
+            department: "",
             isHighlight: false,
-            isOnView: false
+            isOnView: false,
+            hasImage: true
         }
     })
 
@@ -29,8 +34,10 @@ export default function AdvancedSearch() {
         query += `${data?.searchBy}=true`
         query += data.geoLocation ? `&geoLocation=${data.geoLocation}` : ""
         query += data.medium ? `&medium=${data.medium}` : ""
+        query += data.department ? `&departmentId=${data.department}` : ""
         query += `&isOnView=${data?.isOnView}`
         query += `&isHighlight=${data?.isHighlight}`
+        query += `&hasImages=${data?.hasImage}`
         query += `&q=${data?.query}`
         //add to search history
         setSearchHistory(await addToHistory(query))
@@ -52,7 +59,7 @@ export default function AdvancedSearch() {
                 <Row>
                     <Col>
                         <Form.Group className="mb-3">
-                            <Form.Label>Search Query</Form.Label>
+                            <Form.Label>Keywords</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder=""
@@ -63,6 +70,7 @@ export default function AdvancedSearch() {
                         </Form.Group>
                     </Col>
                 </Row>
+                <br />
                 <Row>
                     <Col md={4}>
                         <Form.Label>Search By</Form.Label>
@@ -72,25 +80,40 @@ export default function AdvancedSearch() {
                             <option value="artistOrCulture">Artist or Culture</option>
                         </Form.Select>
                     </Col>
+                    {data &&
+                        <Col md={4}>
+                            <Form.Label>Departments: </Form.Label>
+                            <Form.Select name="department" className="mb-3" {...register("department")}>
+                                <option value="">All Departments</option>
+                                {data.departments.map(item => (
+                                    <option value={item.departmentId}>{item.displayName}</option>
+                                ))}
+                            </Form.Select>
+                        </Col>
+                    }
+                </Row>
+                <br />
+                <Row>
                     <Col md={4}>
                         <Form.Group className="mb-3">
                             <Form.Label>Geo Location</Form.Label>
-                            <Form.Control type="text" placeholder="" name="geoLocation" {...register("geoLocation")} />
+                            <Form.Control type="text" placeholder="optional" name="geoLocation" {...register("geoLocation")} />
                             <Form.Text className="text-muted">
-                                Case Sensitive String (ie &quot;Europe&quot;, &quot;France&quot;, &quot;Paris&quot;, &quot;China&quot;, &quot;New York&quot;, etc.), with multiple values separated by the | operator
+                                Case Sensitive (ie &quot;Europe&quot;, &quot;France&quot;, &quot;Paris&quot;, &quot;China&quot;, &quot;New York&quot;, etc.), with multiple values separated by the | operator
                             </Form.Text>
                         </Form.Group>
                     </Col>
                     <Col md={4}>
                         <Form.Group className="mb-3">
                             <Form.Label>Medium</Form.Label>
-                            <Form.Control type="text" placeholder="" name="medium" {...register("medium")} />
+                            <Form.Control type="text" placeholder="optional" name="medium" {...register("medium")} />
                             <Form.Text className="text-muted">
-                                Case Sensitive String (ie: &quot;Ceramics&quot;, &quot;Furniture&quot;, &quot;Paintings&quot;, &quot;Sculpture&quot;, &quot;Textiles&quot;, etc.), with multiple values separated by the | operator
+                                Case Sensitive (ie: &quot;Ceramics&quot;, &quot;Furniture&quot;, &quot;Paintings&quot;, &quot;Sculpture&quot;, &quot;Textiles&quot;, etc.), with multiple values separated by the | operator
                             </Form.Text>
                         </Form.Group>
                     </Col>
                 </Row>
+                <br />
                 <Row>
                     <Col>
                         <Form.Check
@@ -104,6 +127,12 @@ export default function AdvancedSearch() {
                             label="Currently on View"
                             name="isOnView"
                             {...register("isOnView")}
+                        />
+                        <Form.Check
+                            type="checkbox"
+                            label="Has Images"
+                            name="hasImage"
+                            {...register("hasImage")}
                         />
                     </Col>
                 </Row>
