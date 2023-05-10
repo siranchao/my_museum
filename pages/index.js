@@ -1,6 +1,8 @@
 import Head from 'next/head'
-import { Row, Col, Image } from 'react-bootstrap'
+import Image from "next/image"
+import { Row, Col } from 'react-bootstrap'
 import styles from "@/styles/style.module.css"
+import bannerImg from "@/public/img/Banner.jpg"
 
 export default function Home() {
   return (
@@ -13,13 +15,16 @@ export default function Home() {
       </Head>
       <main>
         <h5 style={{ paddingBottom: "0.5rem" }}>Welcome to Metropolitan Museum of Art</h5>
-        <Image
-          src='https://upload.wikimedia.org/wikipedia/commons/3/30/Metropolitan_Museum_of_Art_%28The_Met%29_-_Central_Park%2C_NYC.jpg'
-          fluid
-          rounded
-          alt='main-photo'
-          style={{ marginBottom: "2rem" }}
-        />
+        <Row>
+          <Col md={12}>
+            <Image
+              src={bannerImg}
+              alt='main-photo'
+              className={styles.banner}
+            />
+          </Col>
+        </Row>
+
         <h5>About &quot;The Met&quot;</h5>
         <Row>
           <Col md={6}>

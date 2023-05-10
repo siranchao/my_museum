@@ -1,3 +1,10 @@
+.banner {
+    margin-bottom: 2rem;
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem
+}
+
 .invalid {
     color: red;
     padding: 0.4rem;
@@ -9,7 +16,6 @@
     line-height: 1.5;
     font-weight: 400;
 }
-
 
 .link {
     color: forestgreen;
