@@ -23,8 +23,8 @@ export default function Departments() {
                     <Container>
                         <Row>
                             {data.departments.map(item =>
-                                <Col xs={12} md={6}>
-                                    <DepartmentCard key={item.departmentId} department={item.displayName} deptId={item.departmentId} />
+                                <Col xs={12} md={6} key={item.departmentId}>
+                                    <DepartmentCard department={item.displayName} deptId={item.departmentId} />
                                 </Col>
                             )}
                         </Row>

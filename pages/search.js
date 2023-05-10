@@ -86,7 +86,7 @@ export default function AdvancedSearch() {
                             <Form.Select name="department" className="mb-3" {...register("department")}>
                                 <option value="">All Departments</option>
                                 {data.departments.map(item => (
-                                    <option value={item.departmentId}>{item.displayName}</option>
+                                    <option key={item.departmentId} value={item.departmentId}>{item.displayName}</option>
                                 ))}
                             </Form.Select>
                         </Col>
