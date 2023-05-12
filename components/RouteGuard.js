@@ -6,7 +6,7 @@ import { useAtom } from 'jotai'
 import { getFavorites, getHistory } from "@/lib/userData";
 
 
-const PUBLIC_PATHS = ["/", "/login", "/register", "/_error"]
+const PUBLIC_PATHS = ["/", "/departments", "/login", "/register", "/_error"]
 
 export default function RouteGuard(props) {
     const router = useRouter();

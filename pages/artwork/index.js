@@ -3,33 +3,41 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import Error from 'next/error'
-import { Row, Col, Pagination, Card } from 'react-bootstrap'
+import { Row, Col, Pagination } from 'react-bootstrap'
 import ArtworkCard from '@/components/ArtworkCard'
 import validData from '@/public/data/validObjectIDList.json'
 import CustomCard from '@/components/CustomCard'
+import PageLoading from '@/components/PageLoading'
 
 const PER_PAGE = 12
 
 
 export default function ArtworkList() {
+    const [loading, setLoading] = useState(true)
     const [artworkList, setArtworkList] = useState()
     const [page, setPage] = useState(1)
 
     const router = useRouter()
-    let finalQuery = router.asPath.split('?')[1]
+    const queryList = router.asPath.split('?')
+    const finalQuery = queryList.includes("all") ? `objects?${queryList[1]}` : `search?${queryList[1]}`
 
-    const { data, error } = useSWR(`https://collectionapi.metmuseum.org/public/collection/v1/search?${finalQuery}`)
+    const { data, error } = useSWR(`https://collectionapi.metmuseum.org/public/collection/v1/${finalQuery}`)
 
     const previousPage = () => {
-        if (page > 1) {
+        if (page > 1)
             setPage(page - 1)
-        }
     }
-
     const nextPage = () => {
-        if (page < artworkList.length) {
+        if (page < artworkList.length)
             setPage(page + 1)
-        }
+    }
+    const previousTenPages = () => {
+        if (page > 10)
+            setPage(page - 10)
+    }
+    const nextTenPages = () => {
+        if (page < artworkList.length - 10)
+            setPage(page + 10)
     }
 
     useEffect(() => {
@@ -46,6 +54,7 @@ export default function ArtworkList() {
                 results.push(chunk);
             }
             setArtworkList(results)
+            setLoading(false)
         }
         setPage(1)
     }, [data])
@@ -58,7 +67,7 @@ export default function ArtworkList() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/museum.ico" />
             </Head>
-            {
+            {loading ? <PageLoading /> :
                 error ? <Error statusCode={404} /> :
                     artworkList ?
                         <>
@@ -85,9 +94,11 @@ export default function ArtworkList() {
                                     <Row>
                                         <Col>
                                             <Pagination>
+                                                <Pagination.First onClick={previousTenPages} />
                                                 <Pagination.Prev onClick={previousPage} />
                                                 <Pagination.Item>{page}</Pagination.Item>
                                                 <Pagination.Next onClick={nextPage} />
+                                                <Pagination.Last onClick={nextTenPages} />
                                             </Pagination>
                                         </Col>
                                     </Row>

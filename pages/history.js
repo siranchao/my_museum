@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import CustomCard from '@/components/CustomCard'
 import styles from '@/styles/style.module.css'
 import { Button, ListGroup } from 'react-bootstrap'
-import { removeFromHistory } from '@/lib/userData'
+import { removeFromHistory, removeAllHistory } from '@/lib/userData'
 
 export default function History() {
     const router = useRouter()
@@ -23,12 +23,16 @@ export default function History() {
     })
 
     const historyClicked = (e, index) => {
-        router.push(searchHistory[index])
+        router.push(`artwork?${searchHistory[index]}`)
     }
 
     const removeHistoryClicked = async (e, index) => {
         e.stopPropagation()
         setSearchHistory(await removeFromHistory(searchHistory[index]))
+    }
+
+    const removeAllHistoryClicked = async () => {
+        setSearchHistory(await removeAllHistory())
     }
 
     return (
@@ -42,27 +46,30 @@ export default function History() {
             <main>
                 {
                     parsedHistory.length > 0 ?
-                        <ListGroup>
-                            {parsedHistory.map((item, index) => (
-                                <ListGroup.Item onClick={e => historyClicked(e, index)} className={styles.historyListItem} key={index}>
-                                    <div>
-                                        <div style={{ fontWeight: 600 }}>Keyword: {item.q}</div>
-                                        <div style={{ fontWeight: 300 }}>
-                                            <span>Search By: {Object.keys(item)[0].split("=")[0]}&nbsp;&nbsp;&nbsp;</span>
-                                            {Object.keys(item).map((key, index) => (
-                                                (index !== 0 && index !== Object.keys(item).length - 1) &&
-                                                <span key={index}>{key}: {item[key]}&nbsp;&nbsp;&nbsp;</span>
-                                            ))}
+                        <div>
+                            <ListGroup>
+                                {parsedHistory.map((item, index) => (
+                                    <ListGroup.Item onClick={e => historyClicked(e, index)} className={styles.historyListItem} key={index}>
+                                        <div>
+                                            <div style={{ fontWeight: 600 }}>Keyword: {item.q}</div>
+                                            <div style={{ fontWeight: 300 }}>
+                                                <span>Search By: {Object.keys(item)[0].split("=")[0]}&nbsp;&nbsp;&nbsp;</span>
+                                                {Object.keys(item).map((key, index) => (
+                                                    (index !== 0 && index !== Object.keys(item).length - 1) &&
+                                                    <span key={index}>{key}: {item[key]}&nbsp;&nbsp;&nbsp;</span>
+                                                ))}
+                                            </div>
+
                                         </div>
+                                        <Button variant="info" size="sm" onClick={e => removeHistoryClicked(e, index)} style={{ height: "1.8rem" }}>
+                                            &times;
+                                        </Button>
+                                    </ListGroup.Item>
 
-                                    </div>
-                                    <Button variant="danger" size="sm" onClick={e => removeHistoryClicked(e, index)} style={{ height: "1.8rem" }}>
-                                        &times;
-                                    </Button>
-                                </ListGroup.Item>
-
-                            ))}
-                        </ListGroup>
+                                ))}
+                            </ListGroup>
+                            <Button variant="danger" size="sm" style={{ marginTop: "1rem", marginLeft: "0.5rem" }} onClick={e => removeAllHistoryClicked()}>Clear All History</Button>
+                        </div>
                         :
                         <CustomCard title={"No search history can be found"} text={"Try searching for some artworks"} />
                 }
