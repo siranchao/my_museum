@@ -34,7 +34,7 @@ export default function MainNav() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const route = `/artwork?title=true&q=${formData}`
+        const route = `/artwork?title=true&hasImages=true&q=${formData}`
         setFormData("")
         //add to search history
         setSearchHistory(await addToHistory(`title=true&q=${formData}`))

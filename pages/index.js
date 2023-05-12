@@ -20,6 +20,7 @@ export default function Home() {
             <Image
               src={bannerImg}
               alt='main-photo'
+              priority={true}
               className={styles.banner}
             />
           </Col>

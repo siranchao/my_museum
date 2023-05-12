@@ -3,6 +3,7 @@ import useSWR from 'swr'
 import CustomCard from '@/components/CustomCard'
 import DepartmentCard from '@/components/DepartmentCard'
 import { Container, Row, Col } from 'react-bootstrap'
+import styles from '@/styles/departments.module.css'
 
 
 export default function Departments() {
@@ -18,19 +19,20 @@ export default function Departments() {
             </Head>
 
             <main>
-                <h3>Departments</h3>
+                <h5 style={{ paddingBottom: "0.5rem" }}>Departments</h5>
                 {data ?
-                    <Container>
+                    <Container className={styles.deptContainer}>
                         <Row>
                             {data.departments.map(item =>
-                                <Col xs={12} md={6} key={item.departmentId}>
+                                <Col xs={12} md={6}
+                                    key={item.departmentId}
+                                    className={styles.deptCol}
+                                >
                                     <DepartmentCard department={item.displayName} deptId={item.departmentId} />
                                 </Col>
                             )}
                         </Row>
                     </Container>
-
-
                     :
                     <CustomCard title={"Sorry, No department data available"} text={"Please try again later"} />
                 }

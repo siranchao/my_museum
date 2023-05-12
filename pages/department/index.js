@@ -5,23 +5,21 @@ import useSWR from 'swr'
 import Error from 'next/error'
 import { Row, Col, Pagination } from 'react-bootstrap'
 import ArtworkCard from '@/components/ArtworkCard'
-import validData from '@/public/data/validObjectIDList.json'
 import CustomCard from '@/components/CustomCard'
 import PageLoading from '@/components/PageLoading'
 
 const PER_PAGE = 12
 
 
-export default function ArtworkList() {
+export default function DepartmentCollection() {
     const [loading, setLoading] = useState(true)
     const [artworkList, setArtworkList] = useState()
     const [page, setPage] = useState(1)
 
     const router = useRouter()
-    const queryList = router.asPath.split('?')
-    const finalQuery = queryList.includes("all") ? `objects?${queryList[1]}` : `search?${queryList[1]}`
+    const query = router.asPath.split('?')[1]
 
-    const { data, error } = useSWR(`https://collectionapi.metmuseum.org/public/collection/v1/${finalQuery}`)
+    const { data, error } = useSWR(`https://collectionapi.metmuseum.org/public/collection/v1/objects?${query}`)
 
     const previousPage = () => {
         if (page > 1)
@@ -42,15 +40,9 @@ export default function ArtworkList() {
 
     useEffect(() => {
         if (data) {
-            //only filter valid items from json data
-            const filteredData = validData.objectIDs.filter((item) => {
-                return data.objectIDs?.includes(item)
-            })
-
-            //calculate items for each page
             const results = []
-            for (let i = 0; i < filteredData.length; i += PER_PAGE) {
-                const chunk = filteredData.slice(i, i + PER_PAGE);
+            for (let i = 0; i < data.objectIDs.length; i += PER_PAGE) {
+                const chunk = data.objectIDs.slice(i, i + PER_PAGE);
                 results.push(chunk);
             }
             setArtworkList(results)
@@ -62,8 +54,8 @@ export default function ArtworkList() {
     return (
         <>
             <Head>
-                <title>Metropolitan Museum of Art | Artworks</title>
-                <meta name="description" content="Metropolitan Museum of Art | Artworks" />
+                <title>Metropolitan Museum of Art | Department Collection</title>
+                <meta name="description" content="Metropolitan Museum of Art | Department Collection" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/museum.ico" />
             </Head>
