@@ -5,7 +5,6 @@ import { useRouter } from 'next/router'
 export default function DepartmentCard({ department, deptId }) {
     const router = useRouter()
     const clickDept = () => {
-        // router.push(`artwork?departmentIds=${deptId}?all`)
         router.push(`department?departmentIds=${deptId}`)
     }
 

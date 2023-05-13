@@ -18,10 +18,9 @@ export default function ArtworkList() {
     const [page, setPage] = useState(1)
 
     const router = useRouter()
-    const queryList = router.asPath.split('?')
-    const finalQuery = queryList.includes("all") ? `objects?${queryList[1]}` : `search?${queryList[1]}`
+    const finalQuery = router.asPath.split('?')[1]
 
-    const { data, error } = useSWR(`https://collectionapi.metmuseum.org/public/collection/v1/${finalQuery}`)
+    const { data, error } = useSWR(`https://collectionapi.metmuseum.org/public/collection/v1/search?${finalQuery}`)
 
     const previousPage = () => {
         if (page > 1)

@@ -44,6 +44,7 @@
     justify-content: space-between;
 }
 
+
 .historyListItem{
     display: flex;
     justify-content: space-between;
@@ -53,4 +54,15 @@
 .historyListItem:hover {
     background-color: rgb(244, 244, 244);
     cursor:pointer;
+}
+
+.table {
+    font-size: 0.9rem;
+}
+
+@media only screen and (max-width: 768px) {
+    .detailPageBtnGroup{
+        display: flex;
+        flex-direction: column;
+    }
 }
