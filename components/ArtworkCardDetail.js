@@ -2,6 +2,7 @@ import useSWR from 'swr'
 import Error from 'next/error'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import AdditionalImages from './AdditionImages';
 import { useRouter } from 'next/router';
 import styles from '@/styles/style.module.css'
 import { useAtom } from 'jotai';
@@ -40,7 +41,7 @@ export default function ArtworkCardDetail({ objectID }) {
                 <>
                     <Card>
                         {data.primaryImage && <Card.Img variant="top" src={data.primaryImage} />}
-
+                        {data.additionalImages.length > 0 && <AdditionalImages imgs={data.additionalImages} />}
                         <Card.Body>
                             <Card.Title>{data.title ? data.title : "N/A"}</Card.Title>
                             <section className={styles.textArea}>
