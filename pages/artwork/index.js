@@ -93,11 +93,11 @@ export default function ArtworkList() {
                                     <Row>
                                         <Col>
                                             <Pagination>
-                                                <Pagination.First onClick={previousTenPages} />
-                                                <Pagination.Prev onClick={previousPage} />
+                                                <Pagination.First onClick={previousTenPages} disabled={artworkList.length === 1 || page === 1} />
+                                                <Pagination.Prev onClick={previousPage} disabled={artworkList.length === 1 || page === 1} />
                                                 <Pagination.Item>{page}</Pagination.Item>
-                                                <Pagination.Next onClick={nextPage} />
-                                                <Pagination.Last onClick={nextTenPages} />
+                                                <Pagination.Next onClick={nextPage} disabled={artworkList.length === 1 || page === artworkList.length} />
+                                                <Pagination.Last onClick={nextTenPages} disabled={artworkList.length === 1 || page === artworkList.length} />
                                             </Pagination>
                                         </Col>
                                     </Row>

@@ -78,7 +78,7 @@ export default function ArtworkCardDetail({ objectID }) {
                             <section className={styles.detailPageBtnGroup}>
                                 <div style={{ marginBottom: "1rem" }}>
                                     <Button variant={added ? "secondary" : "info"} onClick={favoritesClicked} style={{ minWidth: "10rem", maxWidth: "14rem", marginRight: "1rem" }}>
-                                        {added ? "Remove from Favorites" : "Add to Favorites"}
+                                        {added ? "Remove Favorite" : "Add to Favorite"}
                                     </Button>
 
                                     <Link href={`/artwork/profile/${objectID}`} passHref>
