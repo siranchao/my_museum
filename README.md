@@ -1,10 +1,27 @@
+
+# Portable Museum: The Online Artwork Archives for The Metropolitan Museum of Art("The Met")
+[![React](https://img.shields.io/badge/React-%2361DAFB.svg?&style=for-the-badge&logo=React&logoColor=white)]()
+[![Next.js](https://img.shields.io/badge/next.js-%23663399.svg?&style=for-the-badge&logo=Next.js&logoColor=white)]()
+[![Node.js](https://img.shields.io/badge/Node.js-%23339933.svg?&style=for-the-badge&logo=Node.js&logoColor=white)]()
+[![Express](https://img.shields.io/badge/Express-%23000000.svg?&style=for-the-badge&logo=Express&logoColor=white)]()
+[![Mongo DB](https://img.shields.io/badge/MongoDB-%2347A248.svg?&style=for-the-badge&logo=MongoDB&logoColor=white)]()
+
+Portable Museum app is a fully mobile responsive web application primarily using React and Next.js, designed to create a online archives for artworks
+- The app provides a comprehensive online archives service for millions of artuworks in "The Met"
+- Once logged in, user can access, view, collect and share any artworks and cultural relics online. By just few simple clicks.
+- All artwork infomation are fetched from The Metropolitan Museum of Art Collection API: (https://metmuseum.github.io/)
+
+
+Coding stack: MERN
+
+- Including: React, Next.js, TypeScript, Mongo, Node, and express.js
+
+- App URL: [my-museum-siranchao.vercel.app](https://my-museum-siranchao.vercel.app/)
+
+
+
+## Getting Started with Next.js
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-App URL: (https://my-museum-siranchao.vercel.app/)
-
-The Metropolitan Museum of Art Collection API: (https://metmuseum.github.io/)
-
-## Getting Started
 
 First, run the development server:
 
