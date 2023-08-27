@@ -29,7 +29,7 @@ export default function Favorites() {
                     {
                         favorites.length > 0 ?
                             favorites.map((id) => (
-                                <ArtworkCard key={item} objectID={id} />
+                                <ArtworkCard key={id} objectID={id} />
                             ))
                             :
                             <>
