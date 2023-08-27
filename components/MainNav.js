@@ -37,7 +37,9 @@ export default function MainNav() {
         const route = `/artwork?title=true&hasImages=true&q=${formData}`
         setFormData("")
         //add to search history
-        setSearchHistory(await addToHistory(`title=true&q=${formData}`))
+        if (token) {
+            setSearchHistory(await addToHistory(`title=true&q=${formData}`))
+        }
         router.push(route)
     }
 
@@ -56,23 +58,21 @@ export default function MainNav() {
                         <Nav className="me-auto">
                             <Link href="/" passHref legacyBehavior><Nav.Link onClick={collapseNav} active={router.pathname === "/"}>Home</Nav.Link></Link>
                             <Link href="/departments" passHref legacyBehavior><Nav.Link onClick={collapseNav} active={router.pathname === "/departments"}>Departments</Nav.Link></Link>
-                            {token && <Link href="/search" passHref legacyBehavior><Nav.Link onClick={collapseNav} active={router.pathname === "/search"} >Advanced Search</Nav.Link></Link>}
+                            <Link href="/search" passHref legacyBehavior><Nav.Link onClick={collapseNav} active={router.pathname === "/search"} >Advanced Search</Nav.Link></Link>
                         </Nav>
                         &nbsp;
-                        {token &&
-                            <Form className="d-flex" onSubmit={handleSubmit}>
-                                <Form.Control
-                                    type="search"
-                                    placeholder="Artwork Title"
-                                    className="me-2"
-                                    aria-label="Search"
-                                    onChange={handleChange}
-                                    value={formData}
-                                />
-                                <Button variant="outline-success" type='submit' onClick={collapseNav}>Search</Button>
-                            </Form>
-                        }
 
+                        <Form className="d-flex" onSubmit={handleSubmit}>
+                            <Form.Control
+                                type="search"
+                                placeholder="Artwork Title"
+                                className="me-2"
+                                aria-label="Search"
+                                onChange={handleChange}
+                                value={formData}
+                            />
+                            <Button variant="outline-success" type='submit' onClick={collapseNav}>Search</Button>
+                        </Form>
                         &nbsp;
 
                         {token ?

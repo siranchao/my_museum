@@ -6,7 +6,6 @@ import { useAtom } from 'jotai'
 import { getFavorites, getHistory } from "@/lib/userData";
 
 
-//const PUBLIC_PATHS = ["/", "/departments", "/login", "/register", "/_error"]
 const PROTECTED_PATHS = ["/favorites", "/history"]
 
 export default function RouteGuard(props) {
@@ -35,8 +34,11 @@ export default function RouteGuard(props) {
 
 
     useEffect(() => {
-        updateAtoms();
         authCheck(router.pathname);
+
+        if (isAuthenticated()) {
+            updateAtoms()
+        }
 
         router.events.on('routeChangeComplete', authCheck);
 

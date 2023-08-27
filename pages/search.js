@@ -7,8 +7,11 @@ import styles from "@/styles/style.module.css"
 import { useAtom } from 'jotai'
 import { searchHistoryAtom } from '@/store'
 import { addToHistory } from '@/lib/userData'
+import { readToken } from '@/lib/auth';
 
 export default function AdvancedSearch() {
+    let token = readToken();
+
     //searchHistoryAtom
     const [searchHistory, setSearchHistory] = useAtom(searchHistoryAtom)
 
@@ -40,7 +43,9 @@ export default function AdvancedSearch() {
         query += `&hasImages=${data?.hasImage}`
         query += `&q=${data?.query}`
         //add to search history
-        setSearchHistory(await addToHistory(query))
+        if (token) {
+            setSearchHistory(await addToHistory(query))
+        }
 
         //redirect to search page
         router.push("/artwork?" + query)

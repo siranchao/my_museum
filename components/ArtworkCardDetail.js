@@ -10,14 +10,21 @@ import { useAtom } from 'jotai';
 import { favoritesAtom } from '@/store';
 import { useEffect, useState } from 'react';
 import { addToFavorites, removeFromFavorites } from '@/lib/userData';
+import { readToken } from '@/lib/auth';
 
 export default function ArtworkCardDetail({ objectID }) {
+    let token = readToken();
     const router = useRouter()
 
     const [favorites, setFavorites] = useAtom(favoritesAtom)
     const [added, setAdded] = useState(false)
 
     const favoritesClicked = async () => {
+        if (!token) {
+            window.alert("Please login to use this feature")
+            return
+        }
+
         if (added) {
             setFavorites(await removeFromFavorites(objectID))
         }
