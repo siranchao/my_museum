@@ -29,9 +29,7 @@ export default function Favorites() {
                     {
                         favorites.length > 0 ?
                             favorites.map((id) => (
-                                <Col lg={3} md={4} sm={6} xs={12} key={id}>
-                                    <ArtworkCard objectID={id} />
-                                </Col>
+                                <ArtworkCard key={item} objectID={id} />
                             ))
                             :
                             <>

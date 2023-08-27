@@ -8,7 +8,7 @@ import ArtworkCard from '@/components/ArtworkCard'
 import CustomCard from '@/components/CustomCard'
 import PageLoading from '@/components/PageLoading'
 
-const PER_PAGE = 12
+const PER_PAGE = 48
 
 
 export default function DepartmentCollection() {

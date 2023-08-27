@@ -19,7 +19,7 @@ export default function ArtworkCard({ objectID }) {
                 <Col lg={3} md={4} sm={6} xs={12} >
                     <Card style={{ maxWidth: '100%' }}>
                         <Link href={`/artwork/${objectID}`} passHref>
-                            <Card.Img variant="top" src={data.primaryImageSmall ? data.primaryImageSmall : "https://via.placeholder.com/375x375.png?text=[+Not+Available+]"} />
+                            <Card.Img variant="top" src={data.primaryImageSmall} />
                         </Link>
 
                         <Card.Body>
