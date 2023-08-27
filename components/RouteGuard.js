@@ -6,7 +6,8 @@ import { useAtom } from 'jotai'
 import { getFavorites, getHistory } from "@/lib/userData";
 
 
-const PUBLIC_PATHS = ["/", "/departments", "/login", "/register", "/_error"]
+//const PUBLIC_PATHS = ["/", "/departments", "/login", "/register", "/_error"]
+const PROTECTED_PATHS = ["/favorites", "/history"]
 
 export default function RouteGuard(props) {
     const router = useRouter();
@@ -18,7 +19,7 @@ export default function RouteGuard(props) {
 
     const authCheck = useCallback((url) => {
         const path = url.split('?')[0];
-        if (!isAuthenticated() && !PUBLIC_PATHS.includes(path)) {
+        if (!isAuthenticated() && PROTECTED_PATHS.includes(path)) {
             setAuthorized(false);
             router.push('/login');
         }
