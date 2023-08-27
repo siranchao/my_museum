@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Alert from '@/components/Alert';
 import Loading from '@/components/Loading';
 import { registerUser } from '@/lib/auth';
+import styles from '../styles/auth.module.css'
 
 export default function Register() {
     const router = useRouter();
@@ -42,7 +43,7 @@ export default function Register() {
 
 
     return (
-        <>
+        <div className={styles.container}>
             <Card bg="light">
                 <Card.Body><h4>Register</h4>Please enter your register information below:</Card.Body>
             </Card>
@@ -69,6 +70,6 @@ export default function Register() {
                     {loading && <Loading />}
                 </div>
             </Form>
-        </>
+        </div>
     )
 }

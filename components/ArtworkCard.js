@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Link from 'next/link';
 import styles from '@/styles/style.module.css'
+import { Col } from 'react-bootstrap'
 
 export default function ArtworkCard({ objectID }) {
     const maxLength = 50;
@@ -14,8 +15,8 @@ export default function ArtworkCard({ objectID }) {
         error ?
             <Error statusCode={404} />
             :
-            data ?
-                <>
+            data && data.primaryImageSmall ?
+                <Col lg={3} md={4} sm={6} xs={12} >
                     <Card style={{ maxWidth: '100%' }}>
                         <Link href={`/artwork/${objectID}`} passHref>
                             <Card.Img variant="top" src={data.primaryImageSmall ? data.primaryImageSmall : "https://via.placeholder.com/375x375.png?text=[+Not+Available+]"} />
@@ -41,7 +42,7 @@ export default function ArtworkCard({ objectID }) {
                             </Link>
                         </Card.Body>
                     </Card>
-                </>
+                </Col >
                 :
                 null
     )

@@ -7,6 +7,7 @@ import Alert from '@/components/Alert';
 import Loading from '@/components/Loading';
 import { useAtom } from 'jotai'
 import { searchHistoryAtom, favoritesAtom } from '@/store';
+import styles from '../styles/auth.module.css'
 
 export default function Login() {
     const router = useRouter();
@@ -52,7 +53,7 @@ export default function Login() {
     }
 
     return (
-        <>
+        <div className={styles.container}>
             <Card bg="light">
                 <Card.Body><h4>Login</h4>Please enter your login information below:</Card.Body>
             </Card>
@@ -74,6 +75,6 @@ export default function Login() {
                     {loading && <Loading />}
                 </div>
             </Form>
-        </>
+        </div>
     )
 }

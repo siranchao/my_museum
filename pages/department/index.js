@@ -67,9 +67,7 @@ export default function DepartmentCollection() {
                                 {
                                     artworkList.length > 0 ?
                                         artworkList[page - 1].map((item) => (
-                                            <Col lg={3} md={4} sm={6} xs={12} key={item}>
-                                                <ArtworkCard objectID={item} />
-                                            </Col>
+                                            <ArtworkCard key={item} objectID={item} />
                                         ))
                                         :
                                         <CustomCard title={"Ops! Nothing can be found"} text={"Sorry no results can be found based on your search. Please try entering for something else or check your keywords."} />
