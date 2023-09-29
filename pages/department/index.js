@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
 import { Row, Col, Pagination } from 'react-bootstrap'
+import validData from '@/public/data/validObjectIDList.json'
 import PageLoading from '@/components/PageLoading'
 
 // import MacyLayout from '@/components/MacyLayout'
@@ -48,9 +49,15 @@ export default function DepartmentCollection() {
 
     useEffect(() => {
         if (data) {
+            //only filter valid items from json data
+            const filteredData = validData.objectIDs.filter((item) => {
+                return data.objectIDs?.includes(item)
+            })
+
+            //calculate items for each page
             const results = []
-            for (let i = 0; i < data.objectIDs.length; i += PER_PAGE) {
-                const chunk = data.objectIDs.slice(i, i + PER_PAGE);
+            for (let i = 0; i < filteredData.length; i += PER_PAGE) {
+                const chunk = filteredData.slice(i, i + PER_PAGE);
                 results.push(chunk);
             }
             setArtworkList(results)
