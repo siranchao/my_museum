@@ -2,14 +2,22 @@ import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import useSWR from 'swr'
-import Error from 'next/error'
 import { Row, Col, Pagination } from 'react-bootstrap'
-import ArtworkCard from '@/components/ArtworkCard'
-import CustomCard from '@/components/CustomCard'
 import PageLoading from '@/components/PageLoading'
 
-const PER_PAGE = 48
+// import MacyLayout from '@/components/MacyLayout'
+import dynamic from 'next/dynamic'
+const MacyLayout = dynamic(() => import('@/components/MacyLayout'), { ssr: false })
 
+const PER_PAGE = 28
+
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+    });
+}
 
 export default function DepartmentCollection() {
     const [loading, setLoading] = useState(true)
@@ -19,7 +27,7 @@ export default function DepartmentCollection() {
     const router = useRouter()
     const query = router.asPath.split('?')[1]
 
-    const { data, error } = useSWR(`https://collectionapi.metmuseum.org/public/collection/v1/objects?${query}`)
+    const { data } = useSWR(`https://collectionapi.metmuseum.org/public/collection/v1/objects?${query}`)
 
     const previousPage = () => {
         if (page > 1)
@@ -59,47 +67,54 @@ export default function DepartmentCollection() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/museum.ico" />
             </Head>
-            {loading ? <PageLoading /> :
-                error ? <Error statusCode={404} /> :
-                    artworkList ?
+            {loading ? <PageLoading /> : (
+                <>
+                    <MacyLayout artworkList={artworkList} page={page} />
+
+                    {artworkList.length > 0 &&
                         <>
-                            <Row className='gy-4'>
-                                {
-                                    artworkList.length > 0 ?
-                                        artworkList[page - 1].map((item) => (
-                                            <ArtworkCard key={item} objectID={item} />
-                                        ))
-                                        :
-                                        <CustomCard title={"Ops! Nothing can be found"} text={"Sorry no results can be found based on your search. Please try entering for something else or check your keywords."} />
+                            <br />
+                            <br />
 
-                                }
+                            <Row>
+                                <Col>
+                                    <Pagination>
+                                        <Pagination.First
+                                            onClick={() => {
+                                                previousTenPages()
+                                                scrollToTop()
+                                            }}
+                                            disabled={artworkList.length === 1 || page === 1}
+                                        />
+                                        <Pagination.Prev
+                                            onClick={() => {
+                                                previousPage()
+                                                scrollToTop()
+                                            }}
+                                            disabled={artworkList.length === 1 || page === 1}
+                                        />
+                                        <Pagination.Item>{page}</Pagination.Item>
+                                        <Pagination.Next
+                                            onClick={() => {
+                                                nextPage()
+                                                scrollToTop()
+                                            }}
+                                            disabled={artworkList.length === 1 || page === artworkList.length}
+                                        />
+                                        <Pagination.Last
+                                            onClick={() => {
+                                                nextTenPages()
+                                                scrollToTop()
+                                            }}
+                                            disabled={artworkList.length === 1 || page === artworkList.length}
+                                        />
+                                    </Pagination>
+                                </Col>
                             </Row>
-
-                            {
-                                artworkList.length > 0 &&
-                                <>
-                                    <br />
-                                    <br />
-
-                                    <Row>
-                                        <Col>
-                                            <Pagination>
-                                                <Pagination.First onClick={previousTenPages} />
-                                                <Pagination.Prev onClick={previousPage} />
-                                                <Pagination.Item>{page}</Pagination.Item>
-                                                <Pagination.Next onClick={nextPage} />
-                                                <Pagination.Last onClick={nextTenPages} />
-                                            </Pagination>
-                                        </Col>
-                                    </Row>
-                                </>
-
-                            }
-
                         </>
-                        :
-                        null
-            }
+                    }
+                </>
+            )}
         </>
     )
 }
