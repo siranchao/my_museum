@@ -27,20 +27,12 @@
     cursor: pointer;
 }
 
-.deptImg {
-    display: block;
-
-    width: 400px;
-    height: 400px;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
 .deptName {
     padding-top: 0.5rem;
     text-align: center;
     font-weight: 500;
 }
+
 
 
 @media only screen and (max-width: 1024px) {

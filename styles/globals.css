@@ -30,3 +30,27 @@ body {
 .footer {
   margin-top: auto;
 }
+
+
+/* blur image effects during loading on department page */
+.blurImg {
+  background-position: center;
+  background-size: cover;
+}
+
+.deptImg {
+  display: block;
+  width: 400px;
+  height: 400px;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  object-position: center;
+  object-fit: cover;
+  
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
+}
+
+.deptImgLoaded {
+  opacity: 1;
+}
